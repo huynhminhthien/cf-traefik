@@ -41,3 +41,35 @@ cp .env.example .env
 ```bash
 ./setup
 ```
+
+### Example configure when add new service
+```yml
+    labels:
+      - "traefik.enable=true"
+      # HTTP → HTTPS redirect
+      - "traefik.http.routers.immich.entrypoints=web"
+      - "traefik.http.routers.immich.rule=Host(`immich.example.com`)"
+      - "traefik.http.middlewares.immich-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.immich.middlewares=immich-https-redirect"
+      
+      # HTTPS router
+      - "traefik.http.routers.immich-secure.entrypoints=websecure"
+      - "traefik.http.routers.immich-secure.rule=Host(`immich.example.com`)"
+      - "traefik.http.routers.immich-secure.tls=true"
+      - "traefik.http.routers.immich-secure.service=immich"
+      
+      # Backend config 
+      - "traefik.http.services.immich.loadbalancer.server.scheme=http"
+      - "traefik.http.services.immich.loadbalancer.server.port=2283"
+      - "traefik.docker.network=proxy"
+```
+
+```mermaid
+sequenceDiagram
+    User->>Traefik: HTTP request (port 80)
+    Traefik->>User: 301 Redirect to HTTPS
+    User->>Traefik: HTTPS request (port 443)
+    Traefik->>Immich: HTTP (port 2283, unencrypted)
+    Immich->>Traefik: HTTP response
+    Traefik->>User: HTTPS response
+```
