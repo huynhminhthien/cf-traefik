@@ -1,13 +1,12 @@
 # 🌐 Cloudflare + Traefik: Zero-Exposure Proxy
-Secure reverse proxy with no open ports using Cloudflare Tunnels and Traefik. Perfect for self-hosting with enterprise-grade security.
+Secure reverse proxy with no open ports using Cloudflare Tunnels and Traefik. Perfect for self-hosting.
 
-## 🔥 Key Features
+## 🔥 Advance of this approach
 
 - 🚫 No open ports – All traffic flows through Cloudflare’s encrypted tunnels (no inbound firewall rules).
 - 🔒 Zero Trust ready – Origin server IP stays hidden; no direct internet exposure.
 - 🤖 Fully automated – Wildcard TLS certificates via Cloudflare DNS challenges.
-- 🚀 Production-optimized – TLS 1.3, security headers, and health checks.
-- 🛠️ How It Works
+- 🚀 Production-optimized – TLS 1.3, security headers, and health checks
 
 ```mermaid
 graph LR  
@@ -27,8 +26,8 @@ Docker installed
 ### Setup
 1. Clone the repo:
 ```bash
-git clone https://github.com/your-repo/cloudflare-traefik.git  
-cd cloudflare-traefik  
+git clone https://github.com/huynhminhthien/cf-traefik.git
+cd cf-traefik
 ```
 
 2. Configure environment:
