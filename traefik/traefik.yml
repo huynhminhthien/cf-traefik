@@ -13,9 +13,10 @@ entryPoints:
 
   websecure:
     address: ":443"
-    # http:
-    #   tls:
-    #     certResolver: cloudflare
+    forwardedHeaders:
+      insecure: false
+      trustedIPs:
+        - 172.23.0.0/16
 
 serversTransport:
   insecureSkipVerify: true
@@ -45,3 +46,15 @@ certificatesResolvers:
 log:
   level: INFO
 
+accessLog:
+  filePath: "/var/log/traefik/access.log"
+  fields:
+    defaultMode: keep
+    headers:
+      names:
+        X-Forwarded-For: keep
+experimental:
+  plugins:
+    cloudflarewarp:
+      modulename: github.com/BetterCorp/cloudflarewarp
+      version: v1.3.0

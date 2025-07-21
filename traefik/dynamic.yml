@@ -17,8 +17,12 @@ http:
       redirectScheme:
         scheme: https
         permanent: true
-
-
+    cloudflarewarp:
+       plugin:
+         cloudflarewarp:
+           disableDefault: false
+           trustip:
+             - "2400:cb00::/32"
   services:
     noop:
       loadBalancer:
@@ -33,3 +37,4 @@ tls:
       cipherSuites:
         - TLS_AES_256_GCM_SHA384
         - TLS_CHACHA20_POLY1305_SHA256
+

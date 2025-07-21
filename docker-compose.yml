@@ -11,13 +11,9 @@ services:
       - .env
     networks:
       - traefik_net
-    healthcheck:
-      test: ["CMD", "cloudflared", "tunnel", "list"]
-      interval: 30s
-      timeout: 5s
 
   traefik:
-    image: traefik:latest
+    image: traefik:v3.4
     container_name: traefik
     restart: unless-stopped
     volumes:
@@ -25,6 +21,7 @@ services:
       - ./traefik/traefik.yml:/etc/traefik/traefik.yml:ro
       - ./traefik/dynamic.yml:/etc/traefik/dynamic.yml:ro
       - ./letsencrypt:/letsencrypt
+      - ./logs:/var/log/traefik
       - /var/run/docker.sock:/var/run/docker.sock:ro
     env_file:
       - .env
@@ -52,3 +49,7 @@ networks:
   traefik_net:
     driver: bridge
     attachable: true
+    ipam:
+      config:
+        - subnet: 172.23.0.0/16
+          gateway: 172.23.0.1
