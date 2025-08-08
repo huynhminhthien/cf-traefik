@@ -48,11 +48,14 @@ log:
 
 accessLog:
   filePath: "/var/log/traefik/access.log"
+  format: json
   fields:
     defaultMode: keep
     headers:
       names:
         X-Forwarded-For: keep
+        User-Agent: "keep"
+        Authorization: "drop"
 experimental:
   plugins:
     cloudflarewarp:
